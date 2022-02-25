@@ -4,7 +4,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.18.0"
 }
 
-group = "org.example"
+group = "io.github.andavin"
 version = "1.0"
 
 repositories {
@@ -12,17 +12,25 @@ repositories {
 }
 
 dependencies {
-    implementation("org.codehaus.groovy:groovy-all:3.0.5")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+    implementation(gradleApi())
+    implementation("org.reflections:reflections:0.10.2")
+    implementation("org.dom4j:dom4j:2.1.3")
 }
 
 pluginBundle {
-    website = "<substitute your project website>"
-    vcsUrl = "<uri to project source repository>"
-    tags = listOf("tags", "for", "your", "plugins")
+    website = "https://github.com/Andavin/reflections-gradle-plugin"
+    vcsUrl = "https://github.com/Andavin/reflections-gradle-plugin"
+    description = "Pre-scan and embed a Reflections metadata index file into your artifact."
+    tags = listOf("reflections")
+}
+
+gradlePlugin {
+    plugins {
+        create("greetingsPlugin") {
+            id = "io.github.andavin.reflections.gradle.plugin"
+            displayName = "Reflections Gradle Plugin"
+            description = "Pre-scan and embed a Reflections metadata index file into your artifact."
+            implementationClass = "io.github.andavin.reflections.gradle.plugin.ReflectionsPlugin"
+        }
+    }
 }
